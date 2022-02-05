@@ -1,12 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Index page</title>
-</head>
-<body>
-    <h2>Welcome! This is from template.</h2>
-</body>
-</html>
+{% extends 'main.html' %} {% block content %}
+
+<h2>Welcome! This is from template.</h2>
+{% for employee in employees %}
+<p>{{ employee.ename }}</p>
+<p>{{ employee.eemail }}</p>
+<p>{{ employee.econtact }}</p>
+<p>{{ employee.eaddress }}</p>
+<p>{{ employee.esal }}</p>
+<img src="{{employee.eimage.url}}" alt="image" width="300" height="300" />
+{% endfor %} {% endblock content %}
