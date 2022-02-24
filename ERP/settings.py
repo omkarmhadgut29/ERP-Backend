@@ -23,6 +23,8 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt',
 
     'Employee.apps.EmployeeConfig',
+    'Customer.apps.CustomerConfig',
+    'Lead.apps.LeadConfig',
     
 ]
 
