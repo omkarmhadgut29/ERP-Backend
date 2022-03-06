@@ -28,7 +28,7 @@ class EmployeeList(generics.ListCreateAPIView):
     queryset = Employee.objects.all()
     serializer_class = EmployeeSerializer
 
-class AddEmployees(APIView):
+class AddEmployee(APIView):
 
     authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticated] 
@@ -50,3 +50,12 @@ class AddEmployees(APIView):
                 return Response({'status': 400, 'message': serializer.errors})
         return Response({'status': 400, 'message': 'Student not created'})
 
+class DeleteEmployee(APIView):
+
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated] 
+
+    def post(self, request):
+        employee = Employee.objects.get(id=request.data['id'])
+        employee.delete()
+        return Response({'status': 200, 'message': 'Student deleted'})
