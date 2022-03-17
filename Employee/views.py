@@ -59,3 +59,20 @@ class DeleteEmployee(APIView):
         employee = Employee.objects.get(id=request.data['id'])
         employee.delete()
         return Response({'status': 200, 'message': 'Student deleted'})
+
+class UpdateEmployee(APIView):
+
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    queryset = Employee.objects.all()
+    serializer_class = EmployeeSerializer
+
+    def post(self, request, *args, **kwargs):
+        employee = Employee.objects.get(id=request.data['id'])
+        fields = request.data.keys()
+        for field in fields:
+            if field != "id":
+                setattr(employee, field, request.data[field])
+        employee.save()
+        return Response({'status': 200, 'message': 'Student updated'})
