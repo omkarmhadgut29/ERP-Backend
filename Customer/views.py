@@ -38,3 +38,31 @@ class AddCustomer(APIView):
             else:
                 return Response({'status': 400, 'message': serializer.errors})
         return Response({'status': 400, 'message': 'Student not created'})
+
+class DeleteCustomer(APIView):
+
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated] 
+
+    def post(self, request):
+        customer = Customer.objects.get(id=request.data['id'])
+        customer.delete()
+        return Response({'status': 200, 'message': 'Student deleted'})
+
+class UpdateCustomer(APIView):
+
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    queryset = Customer.objects.all()
+    serializer_class = CustomerSerializer
+
+    def post(self, request, *args, **kwargs):
+        customer = Customer.objects.get(id=request.data['id'])
+        fields = request.data.keys()
+        for field in fields:
+            if field != "id":
+                setattr(customer, field, request.data[field])
+        customer.save()
+        return Response({'status': 200, 'message': 'Student updated'})
+

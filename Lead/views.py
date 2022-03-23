@@ -38,3 +38,31 @@ class AddLead(APIView):
             else:
                 return Response({'status': 400, 'message': serializer.errors})
         return Response({'status': 400, 'message': 'Student not created'})
+
+class DeleteLead(APIView):
+
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated] 
+
+    def post(self, request):
+        lead = Lead.objects.get(id=request.data['id'])
+        lead.delete()
+        return Response({'status': 200, 'message': 'Student deleted'})
+
+class UpdateLead(APIView):
+
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    queryset = Lead.objects.all()
+    serializer_class = LeadSerializer
+
+    def post(self, request, *args, **kwargs):
+        lead = Lead.objects.get(id=request.data['id'])
+        fields = request.data.keys()
+        for field in fields:
+            if field != "id":
+                setattr(lead, field, request.data[field])
+        lead.save()
+        return Response({'status': 200, 'message': 'Student updated'})
+

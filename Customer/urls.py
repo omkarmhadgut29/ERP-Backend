@@ -4,4 +4,6 @@ from . import views
 urlpatterns = [
     path('', views.CustomerList.as_view(), name="customer"),
     path('api/add-customer/', views.AddCustomer.as_view(), name="add-customer"),
+    path('api/delete-customer/', views.DeleteCustomer.as_view(), name="delete-customer"),
+    path('api/update-customer/', views.UpdateCustomer.as_view(), name="update-customer"),
 ]
