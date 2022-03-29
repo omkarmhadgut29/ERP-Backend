@@ -1,6 +1,9 @@
 {% extends 'main.html' %} {% block content %}
 
 <h2>Welcome! This is from template.</h2>
+
+<h1>{{prediction}}</h1>
+
 {% for employee in employees %}
 <p>{{ employee.ename }}</p>
 <p>{{ employee.eemail }}</p>
@@ -8,4 +11,5 @@
 <p>{{ employee.eaddress }}</p>
 <p>{{ employee.esal }}</p>
 <img src="{{employee.eimage.url}}" alt="image" width="300" height="300" />
+
 {% endfor %} {% endblock content %}
