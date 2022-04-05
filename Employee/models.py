@@ -16,6 +16,7 @@ class Employee(models.Model):
 
 class PredictionDataSet(models.Model):
     id = models.OneToOneField(Employee, on_delete=models.CASCADE, primary_key=True)
+    name = models.CharField(null=True, blank=True, max_length=50)
     satisfaction_level = models.FloatField(null=True, blank=True)
     last_evaluation = models.FloatField(null=True, blank=True)
     salary = models.CharField(null=True, blank=True, max_length=50)

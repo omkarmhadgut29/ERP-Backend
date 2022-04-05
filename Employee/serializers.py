@@ -9,4 +9,4 @@ class EmployeeSerializer(serializers.ModelSerializer):
 class PredictionDataSetSerializer(serializers.ModelSerializer):
     class Meta:
         model = PredictionDataSet
-        fields = ('id', 'satisfaction_level', 'last_evaluation', 'salary', 'department', 'number_project', 'average_montly_hours', 'time_spend_company', 'Work_accident', 'promotion_last_5years', 'prediction')
+        fields = ('id','name', 'prediction', 'satisfaction_level', 'last_evaluation', 'salary', 'department', 'number_project', 'average_montly_hours', 'time_spend_company', 'Work_accident', 'promotion_last_5years')

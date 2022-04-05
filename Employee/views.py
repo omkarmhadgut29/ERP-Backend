@@ -1,3 +1,4 @@
+from tokenize import String
 from django.http.response import HttpResponse
 from django.shortcuts import render
 from rest_framework.response import Response
@@ -42,7 +43,6 @@ def DataPreprocessing(data):
     df = data.copy()
 
     df.pop("id")
-
     if df['salary'] == "low":
         df['salary'] = 2
     elif df['salary'] == "medium":
@@ -96,11 +96,15 @@ class AddEmployee(APIView):
     permission_classes = [IsAuthenticated] 
 
     def post(self, request):
-        fields = Employee._meta.get_fields()
+        fields = list(Employee._meta.get_fields())
+        del fields[0:1]
         validData = True
+
         for field in fields:
-            if field.name != "id" and field.name != "image":
-                if request.data[field.name] == '':
+            field = str(field).split(".")
+            del field[0:2]
+            if field[0] != "id" and field[0] != "image":
+                if request.data[field[0]] == '':
                     validData = False
                     break
         if validData:
@@ -155,8 +159,10 @@ class AddPredictionDataSet(APIView):
         Catagory=['Employee will stay','Employee will Leave']
 
         result = employee_model.predict([list(Preprocessed_df.values())])
+        print(result)
 
         request.data['prediction'] = Catagory[int(result)]
+        request.data['name'] = Employee.objects.get(id=request.data['id']).name
 
         serializer = PredictionDataSetSerializer(data=request.data)
         if serializer.is_valid():
@@ -164,6 +170,7 @@ class AddPredictionDataSet(APIView):
             return Response({'status': 200, 'message': 'Prediction Dataset added Successfully.', 'data': serializer.data})
         else:
             return Response({'status': 400, 'message': serializer.errors})
+        # return Response({'status': 400, 'message': 'Prediction Dataset added Successfully.', 'data': ''})
 
 
 # Listing PredictionDataSet

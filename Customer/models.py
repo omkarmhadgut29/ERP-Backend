@@ -13,3 +13,29 @@ class Customer(models.Model):
     def __str__(self):
         return self.name
 
+class CustomerPredictionDataSet(models.Model):
+    id = models.OneToOneField(Customer, on_delete=models.CASCADE, primary_key=True)
+    name = models.CharField(null=True, blank=True, max_length=50)
+    gender = models.CharField(null=True, blank=True, max_length=50)
+    SeniorCitizen = models.IntegerField(null=True, blank=True)
+    Partner = models.CharField(null=True, blank=True, max_length=50)
+    Dependents = models.CharField(null=True, blank=True, max_length=50)
+    tenure = models.IntegerField(null=True, blank=True)
+    PhoneService = models.CharField(null=True, blank=True, max_length=50)
+    MultipleLines = models.CharField(null=True, blank=True, max_length=50)
+    InternetService = models.CharField(null=True, blank=True, max_length=50)
+    OnlineSecurity = models.CharField(null=True, blank=True, max_length=50)
+    OnlineBackup = models.CharField(null=True, blank=True, max_length=50)
+    DeviceProtection = models.CharField(null=True, blank=True, max_length=50)
+    TechSupport = models.CharField(null=True, blank=True, max_length=50)
+    StreamingTV = models.CharField(null=True, blank=True, max_length=50)
+    StreamingMovies = models.CharField(null=True, blank=True, max_length=50)
+    Contract = models.CharField(null=True, blank=True, max_length=50)
+    PaperlessBilling = models.CharField(null=True, blank=True, max_length=50)
+    PaymentMethod = models.CharField(null=True, blank=True, max_length=50)
+    MonthlyCharges = models.FloatField(null=True, blank=True)
+    TotalCharges = models.FloatField(null=True, blank=True)
+    Churn = models.CharField(null=True, blank=True, max_length=50)
+
+    def __str__(self):
+        return self.id.name
